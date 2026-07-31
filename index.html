@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dasky — Manual de usuario</title>
+<meta name="description" content="Manual completo de Dasky. Guía rápida, seguridad, especificaciones y cumplimiento normativo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0b0d;
+    --surface:#131519;
+    --surface-2:#191c21;
+    --line:#23262c;
+    --teal:#1abfbb;
+    --teal-dim:#0d7a77;
+    --teal-glow:rgba(26,191,187,0.12);
+    --text:#f2f3f4;
+    --muted:#8a8f98;
+    --muted-2:#5a5f68;
+    --amber:#e8a33d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  .wrap{max-width:640px;margin:0 auto;padding:0 24px;}
+
+  /* ── HERO: minimal branding ── */
+  .hero{
+    padding:56px 0 40px;
+    border-bottom:1px solid var(--line);
+  }
+  .brand-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;}
+  .brand{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:44px;
+    letter-spacing:-0.02em;
+    color:var(--text);
+  }
+  .brand .dot{color:var(--teal);}
+  .model-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+    border:1px solid var(--line);
+    padding:4px 10px;
+    border-radius:100px;
+  }
+  .tagline{
+    font-size:15px;
+    color:var(--muted);
+    font-weight:300;
+  }
+
+  /* ── SECTIONS ── */
+  section{padding:40px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:10px;
+  }
+  h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:26px;
+    letter-spacing:-0.01em;
+    margin-bottom:18px;
+  }
+  p{color:#c7cad0;font-size:15px;font-weight:300;margin-bottom:12px;}
+  p:last-child{margin-bottom:0;}
+
+  /* Quick start — real sequence, numbered */
+  .steps{list-style:none;counter-reset:step;}
+  .step{
+    counter-increment:step;
+    display:flex;
+    gap:16px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .step:first-child{border-top:none;}
+  .step-num{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:20px;
+    color:var(--teal);
+    min-width:28px;
+  }
+  .step-body{flex:1;}
+  .step-title{font-size:15.5px;color:var(--text);font-weight:500;margin-bottom:2px;}
+  .step-desc{font-size:13.5px;color:var(--muted);font-weight:300;}
+
+  /* Safety — not numbered, plain list with dash */
+  .safety-list{list-style:none;}
+  .safety-list li{
+    padding:12px 0;
+    border-top:1px solid var(--line);
+    font-size:14.5px;
+    color:#c7cad0;
+    display:flex;
+    gap:10px;
+  }
+  .safety-list li:first-child{border-top:none;}
+  .safety-list li::before{content:"–";color:var(--amber);flex-shrink:0;}
+
+  /* Spec sheet — mono, key:value */
+  .spec-group{margin-bottom:22px;}
+  .spec-group:last-child{margin-bottom:0;}
+  .spec-group-title{
+    font-size:12px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:8px;
+  }
+  .spec-row{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-top:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+  }
+  .spec-row:first-of-type{border-top:none;}
+  .spec-k{color:var(--muted);}
+  .spec-v{color:var(--text);text-align:right;}
+
+  /* Cómo usarlo — gestures, warning tag, tips */
+  .gesture-list{margin-bottom:28px;}
+  .gesture{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .gesture:first-child{border-top:none;}
+  .gesture-icon{
+    width:40px;height:40px;
+    flex-shrink:0;
+    border-radius:10px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .gesture-icon svg{width:20px;height:20px;stroke:var(--teal);}
+  .gesture-body{flex:1;padding-top:2px;}
+  .gesture-title{font-size:14.5px;color:var(--text);font-weight:500;margin-bottom:2px;}
+  .gesture-desc{font-size:13px;color:var(--muted);font-weight:300;}
+
+  .warn-tag{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    background:rgba(224,60,60,0.08);
+    border:1px solid rgba(224,60,60,0.35);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:28px;
+  }
+  .warn-icon{flex-shrink:0;margin-top:1px;}
+  .warn-icon svg{width:20px;height:20px;stroke:#e0453c;}
+  .warn-text{font-size:13.5px;color:#f0b3ae;font-weight:400;line-height:1.55;}
+  .warn-text b{color:#ff6e63;font-weight:600;}
+
+  .tips-title{
+    font-size:12px;color:var(--muted);text-transform:uppercase;
+    letter-spacing:0.06em;margin-bottom:12px;
+  }
+  .tip{
+    display:flex;
+    gap:14px;
+    padding:13px 0;
+    border-top:1px solid var(--line);
+  }
+  .tip:first-child{border-top:none;}
+  .tip-icon{flex-shrink:0;width:18px;height:18px;margin-top:2px;}
+  .tip-icon svg{width:18px;height:18px;stroke:var(--muted);}
+  .tip-text{font-size:13.5px;color:#c7cad0;font-weight:300;}
+  .info-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:14px;
+  }
+  .info-card:last-child{margin-bottom:0;}
+  .info-card-title{font-size:14px;color:var(--teal);font-weight:500;margin-bottom:8px;}
+  .info-card p{font-size:13.5px;color:var(--muted);margin-bottom:6px;}
+
+  .marks-row{display:flex;align-items:center;gap:18px;margin-top:16px;flex-wrap:wrap;}
+  .mark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:var(--text);}
+  .mark-small{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border:1px solid var(--line);padding:3px 8px;border-radius:6px;}
+  .mark-ce-svg{width:52px;height:auto;}
+  .mark-ce-svg path{fill:var(--text);}
+  .mark-weee-svg{width:34px;height:auto;}
+  .mark-weee-svg path,.mark-weee-svg rect,.mark-weee-svg line{stroke:var(--text);fill:none;}
+
+  /* Contact */
+  .contact-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .contact-row:first-child{border-top:none;}
+  .contact-label{font-size:12px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.05em;}
+  .contact-val{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--text);}
+  a.contact-val{color:var(--teal);text-decoration:none;}
+
+  footer{
+    padding:32px 24px 48px;
+    text-align:center;
+  }
+  footer p{color:var(--muted-2);font-size:12px;}
+
+  @media (max-width:400px){
+    .clock{font-size:46px;}
+    .brand{font-size:32px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO — mimics Dasky's own screen -->
+  <div class="hero">
+    <div class="brand-row">
+      <div class="brand">DASKY<span class="dot">.</span></div>
+      <div class="model-tag">v1.0</div>
+    </div>
+    <div class="tagline">Manual de usuario</div>
+  </div>
+
+  <!-- QUICK START -->
+  <section>
+    <div class="eyebrow">Empezar</div>
+    <h2>Guía rápida</h2>
+    <ol class="steps">
+      <li class="step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <div class="step-title">Carga el dispositivo</div>
+          <div class="step-desc">Conecta el cable USB-C incluido para cargar el Dasky.</div>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <div class="step-title">Configura el WiFi</div>
+          <div class="step-desc">En la pantalla de bienvenida, pulsa el botón para iniciar la configuración WiFi.</div>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <div class="step-title">Cambia de pantalla</div>
+          <div class="step-desc">Pulsa una vez el botón para pasar a la siguiente vista de información.</div>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <div class="step-title">Abre los ajustes</div>
+          <div class="step-desc">Mantén pulsado el botón 3 segundos para acceder a la configuración.</div>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-num">5</span>
+        <div class="step-body">
+          <div class="step-title">Restaurar de fábrica</div>
+          <div class="step-desc">Mantén pulsado el botón 8 segundos para volver a la pantalla de bienvenida inicial.</div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- CÓMO USARLO -->
+  <section>
+    <div class="eyebrow">Funciones</div>
+    <h2>Cómo usarlo</h2>
+
+    <div class="gesture-list">
+      <div class="gesture">
+        <div class="gesture-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11.5V6a1.5 1.5 0 0 1 3 0v5"/>
+            <path d="M12 6.2a1.5 1.5 0 0 1 3 0v5.8"/>
+            <path d="M15 7a1.5 1.5 0 0 1 3 0v7"/>
+            <path d="M9 12l-1.6-1.4a1.4 1.4 0 0 0-2 2L9 17.5c1 1.3 2 2.5 4.5 2.5h1a4 4 0 0 0 4-4v-1.5"/>
+            <circle cx="12" cy="4" r="0.6" fill="var(--teal)" stroke="none"/>
+          </svg>
+        </div>
+        <div class="gesture-body">
+          <div class="gesture-title">Toque simple</div>
+          <div class="gesture-desc">Cambia a la siguiente pantalla de información (hora, clima, sensores...).</div>
+        </div>
+      </div>
+
+      <div class="gesture">
+        <div class="gesture-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11.5V6a1.5 1.5 0 0 1 3 0v5"/>
+            <path d="M12 6.2a1.5 1.5 0 0 1 3 0v5.8"/>
+            <path d="M15 7a1.5 1.5 0 0 1 3 0v7"/>
+            <path d="M9 12l-1.6-1.4a1.4 1.4 0 0 0-2 2L9 17.5c1 1.3 2 2.5 4.5 2.5h1a4 4 0 0 0 4-4v-1.5"/>
+            <path d="M4.5 4.5a8 8 0 0 0 0 6" opacity="0.55"/>
+          </svg>
+        </div>
+        <div class="gesture-body">
+          <div class="gesture-title">Mantener pulsado · 3 segundos</div>
+          <div class="gesture-desc">Abre el menú de ajustes: WiFi, brillo y opciones del dispositivo.</div>
+        </div>
+      </div>
+
+      <div class="gesture">
+        <div class="gesture-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12a8 8 0 1 1 3 6.2"/>
+            <path d="M4 18v-4.5H8.5"/>
+          </svg>
+        </div>
+        <div class="gesture-body">
+          <div class="gesture-title">Mantener pulsado · 8 segundos</div>
+          <div class="gesture-desc">Restaura el dispositivo a la pantalla de bienvenida inicial (borra la configuración WiFi).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn-tag">
+      <div class="warn-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3 2 20h20L12 3z"/>
+          <path d="M12 10v4"/>
+          <circle cx="12" cy="17" r="0.8" fill="#e0453c" stroke="none"/>
+        </svg>
+      </div>
+      <div class="warn-text">
+        <b>No dejes que la batería se descargue por completo.</b> Si no vas a usar el Dasky durante un tiempo prolongado, retira la batería en lugar de dejarla a 0%.
+      </div>
+    </div>
+
+    <div class="tips-title">Más información útil</div>
+
+    <div class="tip">
+      <div class="tip-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+      </div>
+      <div class="tip-text">Evita la luz solar directa prolongada: puede reducir el brillo y la vida útil de la pantalla con el tiempo.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12.5a7 7 0 0 1 14 0"/>
+          <path d="M8.5 12.5a3.5 3.5 0 0 1 7 0"/>
+          <circle cx="12" cy="12.5" r="1" fill="var(--muted)" stroke="none"/>
+          <path d="M12 19v2"/>
+        </svg>
+      </div>
+      <div class="tip-text">Si cambias de red WiFi (por ejemplo, te mudas de casa), abre ajustes y vuelve a configurar la conexión.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="4" width="16" height="16" rx="3"/>
+          <path d="M8 12h8M8 16h5"/>
+        </svg>
+      </div>
+      <div class="tip-text">Puedes dejarlo siempre enchufado en el escritorio: la carga se detiene automáticamente al llegar al 100%.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 6h16M4 12h16M4 18h10"/>
+        </svg>
+      </div>
+      <div class="tip-text">Límpialo con un paño suave y seco. No uses líquidos ni productos abrasivos sobre la pantalla.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11l9-7 9 7"/>
+          <path d="M5 10v9h14v-9"/>
+        </svg>
+      </div>
+      <div class="tip-text">Si vas a guardarlo durante meses, hazlo con la batería a media carga (no al 0% ni al 100%) para preservarla mejor.</div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS / SPECS -->
+  <section>
+    <div class="eyebrow">Especificaciones</div>
+    <h2>Ficha técnica</h2>
+
+    <div class="spec-group">
+      <div class="spec-group-title">General</div>
+      <div class="spec-row"><span class="spec-k">Modelo</span><span class="spec-v">Dasky v1.0</span></div>
+      <div class="spec-row"><span class="spec-k">Dimensiones</span><span class="spec-v">35 × 65 mm</span></div>
+      <div class="spec-row"><span class="spec-k">Fabricado en</span><span class="spec-v">España, EU</span></div>
+    </div>
+
+    <div class="spec-group">
+      <div class="spec-group-title">Procesador y conectividad</div>
+      <div class="spec-row"><span class="spec-k">MCU</span><span class="spec-v">ESP32-C3-WROOM-02</span></div>
+      <div class="spec-row"><span class="spec-k">WiFi</span><span class="spec-v">802.11 b/g/n · 2.4GHz</span></div>
+    </div>
+
+    <div class="spec-group">
+      <div class="spec-group-title">Pantalla y sensores</div>
+      <div class="spec-row"><span class="spec-k">Pantalla</span><span class="spec-v">1.69" IPS · 240×280px</span></div>
+      <div class="spec-row"><span class="spec-k">Sensor ambiental</span><span class="spec-v">BME280</span></div>
+      <div class="spec-row"><span class="spec-k">Reloj RTC</span><span class="spec-v">DS3231</span></div>
+    </div>
+
+    <div class="spec-group">
+      <div class="spec-group-title">Alimentación</div>
+      <div class="spec-row"><span class="spec-k">Entrada</span><span class="spec-v">USB-C · 5V/1A</span></div>
+      <div class="spec-row"><span class="spec-k">Batería</span><span class="spec-v">Li-Po 3.7V · 500mAh</span></div>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section>
+    <div class="eyebrow">Importante</div>
+    <h2>Seguridad</h2>
+    <ul class="safety-list">
+      <li>No exponer a agua o humedad.</li>
+      <li>No golpear ni dejar caer.</li>
+      <li>Mantener fuera del alcance de niños menores de 12 años.</li>
+      <li>No intentar abrir ni reparar.</li>
+      <li>No cargar si la batería está hinchada o dañada.</li>
+      <li>Usar únicamente cargador USB-C 5V / 1A.</li>
+    </ul>
+  </section>
+
+  <!-- BATTERY + COMPLIANCE -->
+  <section>
+    <div class="eyebrow">Cumplimiento</div>
+    <h2>Batería y normativa</h2>
+
+    <div class="info-card">
+      <div class="info-card-title">Batería</div>
+      <p>Li-Po 3.7V · 500 mAh · integrada, no extraíble por el usuario.</p>
+      <p>No desechar en la basura doméstica. Llevar a un punto de recogida autorizado.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">Marcados</div>
+      <p>Este producto cumple con el marcado CE, la Directiva RoHS y la normativa WEEE de residuos electrónicos.</p>
+      <div class="marks-row">
+        <svg class="mark-ce-svg" viewBox="0 0 190 100" aria-label="Marcado CE">
+          <path d="M 86.77 80.86 A 48 48 0 1 1 86.77 19.14 L 71.45 32.0 A 28 28 0 1 0 71.45 68.0 Z"/>
+          <rect x="100" y="2" width="18" height="96"/>
+          <rect x="100" y="2" width="70" height="20"/>
+          <rect x="100" y="41" width="55" height="18"/>
+          <rect x="100" y="78" width="70" height="20"/>
+        </svg>
+        <svg class="mark-weee-svg" viewBox="0 0 100 122" aria-label="Símbolo WEEE — recogida separada" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="42" y="2" width="16" height="6"/>
+          <rect x="20" y="8" width="60" height="10"/>
+          <path d="M 25 20 L 75 20 L 68 95 L 32 95 Z"/>
+          <circle cx="38" cy="100" r="6"/>
+          <circle cx="62" cy="100" r="6"/>
+          <line x1="15" y1="15" x2="85" y2="110"/>
+          <line x1="85" y1="15" x2="15" y2="110"/>
+          <line x1="15" y1="119" x2="85" y2="119" stroke-width="6"/>
+        </svg>
+        <span class="mark-small">ROHS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section>
+    <div class="eyebrow">Ayuda</div>
+    <h2>Soporte y contacto</h2>
+    <div class="contact-row">
+      <span class="contact-label">Fabricante</span>
+      <span class="contact-val">[Nombre / marca]</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">Email</span>
+      <a class="contact-val" href="mailto:alvwaretechnology@gmail.com">alvwaretechnology@gmail.com</a>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">País</span>
+      <span class="contact-val">España, EU</span>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Dasky · Desktop Companion · Documento actualizado dinámicamente</p>
+</footer>
+
+</body>
+</html>
+
